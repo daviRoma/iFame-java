@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:cxf="http://cxf.apache.org/core" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+					  http://www.springframework.org/schema/beans/spring-beans.xsd
+                      http://cxf.apache.org/core 
+                      http://cxf.apache.org/schemas/core.xsd 
+                      http://cxf.apache.org/jaxws 
+                      http://cxf.apache.org/schemas/jaxws.xsd					  
+					  http://cxf.apache.org/jaxrs
+                      http://cxf.apache.org/schemas/jaxrs.xsd">
+
+	<jaxrs:server id="ifameServer" address="/">
+		<jaxrs:serviceBeans>
+			<ref bean="ifameRest" />
+			<ref bean="ifameAuthRest" />
+		</jaxrs:serviceBeans>
+		<jaxrs:providers>
+			<ref bean="authorizationFilter" />
+   			<bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+		</jaxrs:providers>
+	</jaxrs:server> 
+
+	<bean id="ifameRest" class="it.univaq.sose.ifameservice.restresources.IfameRestService" />
+	<bean id="ifameAuthRest" class="it.univaq.sose.ifameservice.restresources.AuthenticationRestService" />
+	<bean id="keyGenerator" class="it.univaq.sose.ifameservice.utils.JWTKeyGenerator" />
+	<bean id="authorizationFilter" class="it.univaq.sose.ifameservice.security.SecurityFilter" />
+
+</beans>

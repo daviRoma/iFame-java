@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:cxf="http://cxf.apache.org/core" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+					  http://www.springframework.org/schema/beans/spring-beans.xsd
+                      http://cxf.apache.org/core 
+                      http://cxf.apache.org/schemas/core.xsd 
+                      http://cxf.apache.org/jaxws 
+                      http://cxf.apache.org/schemas/jaxws.xsd					  
+					  http://cxf.apache.org/jaxrs
+                      http://cxf.apache.org/schemas/jaxrs.xsd">
+
+	<jaxrs:server id="accountServer" address="/">
+		<jaxrs:serviceBeans>
+			<ref bean="accountRest" />
+		</jaxrs:serviceBeans>
+		<jaxrs:providers>
+   			<bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+		</jaxrs:providers>
+	</jaxrs:server>
+
+	<bean id="accountRest" class="it.univaq.sose.accountservice.restresources.AccountRestResource" />
+
+</beans>

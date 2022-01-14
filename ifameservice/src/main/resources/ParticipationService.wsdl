@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:tns="http://it.univaq.sose.ifame/participationservice" 
+	xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" 
+	xmlns:wsp="http://www.w3.org/ns/ws-policy" 
+	xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" 
+	xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	name="participationservice" 
+	targetNamespace="http://it.univaq.sose.ifame/participationservice">
+	
+	<wsdl:types> 
+		<xsd:schema xmlns="http://it.univaq.sose.ifame/participationservice" elementFormDefault="unqualified" targetNamespace="http://it.univaq.sose.ifame/participationservice">
+    		
+    		<xsd:complexType name="participationDetail">
+		        <xsd:sequence>
+		            <xsd:element name="eventId" type="xsd:int"/>
+		            <xsd:element minOccurs="0" maxOccurs="unbounded" name="participants" type="xsd:string"/>
+		        </xsd:sequence>
+			</xsd:complexType>
+			
+    		<xsd:element name="eventParticipationElementRequest" type="tns:eventParticipationRequest"/>
+    		<xsd:complexType name="eventParticipationRequest">
+		        <xsd:sequence>
+		            <xsd:element name="eventId" type="xsd:int"/> 
+		        </xsd:sequence>
+    		</xsd:complexType> 
+    		
+    		<xsd:element name="eventListParticipationElementRequest" type="tns:eventListParticipationRequest"/>
+    		<xsd:complexType name="eventListParticipationRequest">
+		        <xsd:sequence>
+		            <xsd:element name="username" type="xsd:string"/>
+		        </xsd:sequence>
+    		</xsd:complexType> 
+    		
+    		<xsd:element name="joinEventElementRequest" type="tns:participationRequest"/>
+    		<xsd:complexType name="participationRequest">
+		        <xsd:sequence>
+		            <xsd:element name="eventId" type="xsd:int"/>
+		            <xsd:element name="participant" type="xsd:string"/>
+		        </xsd:sequence>
+    		</xsd:complexType> 
+
+			<xsd:element name="joinEventElementResponse" type="tns:participationResponse"/>
+			<xsd:complexType name="participationResponse">
+				<xsd:sequence/>
+			</xsd:complexType>
+			
+			<xsd:element name="participationUpdateElementRequest" type="tns:participationUpdateRequest"/>
+    		<xsd:complexType name="participationUpdateRequest">
+		        <xsd:sequence>
+		            <xsd:element name="oldUsername" type="xsd:string"/> 
+		            <xsd:element name="newUsername" type="xsd:string"/> 
+		        </xsd:sequence>
+    		</xsd:complexType> 
+			
+			<xsd:element name="eventParticipationElementResponse" type="tns:eventParticipationResponse"/>
+			<xsd:complexType name="eventParticipationResponse">
+		        <xsd:sequence> 
+		            <xsd:element name="participationDetail" type="tns:participationDetail"/>
+		        </xsd:sequence>
+			</xsd:complexType>
+			
+			<xsd:element name="eventListParticipationElementResponse" type="tns:eventListParticipationResponse"/>
+    		<xsd:complexType name="eventListParticipationResponse">
+		        <xsd:sequence>
+		            <xsd:element minOccurs="0" maxOccurs="unbounded" name="eventIds" type="xsd:int"/>
+		        </xsd:sequence>
+    		</xsd:complexType> 
+    		
+    		<xsd:element name="participationListElementRequest" type="tns:participationListRequest"/>
+    		<xsd:complexType name="participationListRequest">
+		        <xsd:sequence>
+		        	<xsd:element minOccurs="0" maxOccurs="unbounded" name="eventIds" type="xsd:int"/>
+		        </xsd:sequence>
+    		</xsd:complexType> 
+    		<xsd:element name="participationListElementResponse" type="tns:participationListResponse"/>
+    		<xsd:complexType name="participationListResponse">
+		        <xsd:sequence>
+		            <xsd:element minOccurs="0" maxOccurs="unbounded" name="participations" type="tns:participationDetail"/>
+		        </xsd:sequence>
+    		</xsd:complexType>
+    		
+    		<xsd:element name="removeParticipantElementRequest" type="tns:participationRequest"/>
+    		<xsd:element name="removeParticipantElementResponse" type="tns:participationResponse"/>
+    		
+		</xsd:schema>
+	</wsdl:types>
+	
+	<wsdl:message name="eventParticipationMessageRequest">
+    	<wsdl:part element="tns:eventParticipationElementRequest" name="parameters">
+    	</wsdl:part>
+  	</wsdl:message>
+  	<wsdl:message name="eventParticipationMessageResponse">
+    	<wsdl:part element="tns:eventParticipationElementResponse" name="parameters">
+    	</wsdl:part>
+  	</wsdl:message>
+  	
+  	<wsdl:message name="eventListParticipationMessageRequest">
+    	<wsdl:part element="tns:eventListParticipationElementRequest" name="parameters">
+    	</wsdl:part>
+  	</wsdl:message>
+  	<wsdl:message name="eventListParticipationMessageResponse">
+    	<wsdl:part element="tns:eventListParticipationElementResponse" name="parameters">
+    	</wsdl:part>
+  	</wsdl:message>
+  	
+  	<wsdl:message name="participationListMessageRequest">
+    	<wsdl:part element="tns:participationListElementRequest" name="parameters">
+    	</wsdl:part>
+  	</wsdl:message>
+  	<wsdl:message name="participationListMessageResponse">
+    	<wsdl:part element="tns:participationListElementResponse" name="parameters">
+    	</wsdl:part>
+  	</wsdl:message>
+  	
+  	<wsdl:message name="joinEventMessageRequest">
+    	<wsdl:part element="tns:joinEventElementRequest" name="parameters">
+    	</wsdl:part>
+  	</wsdl:message>
+  	<wsdl:message name="joinEventMessageResponse">
+    	<wsdl:part element="tns:joinEventElementResponse" name="parameters">
+    	</wsdl:part>
+  	</wsdl:message>
+  	
+   	<wsdl:message name="removeParticipantMessageRequest">
+    	<wsdl:part element="tns:removeParticipantElementRequest" name="parameters">
+    	</wsdl:part>
+  	</wsdl:message>
+  	
+  	<wsdl:message name="removeParticipantMessageResponse">
+    	<wsdl:part element="tns:removeParticipantElementResponse" name="parameters">
+    	</wsdl:part>
+  	</wsdl:message>
+  	
+  	<wsdl:message name="participationUpdateMessageRequest">
+    	<wsdl:part element="tns:participationUpdateElementRequest" name="parameters">
+    	</wsdl:part>
+  	</wsdl:message>
+  	
+  	<wsdl:portType name="ParticipationServicePT">
+  	   <wsdl:operation name="eventParticipation">
+      		<wsdl:input message="tns:eventParticipationMessageRequest">
+    		</wsdl:input>
+      		<wsdl:output message="tns:eventParticipationMessageResponse">
+    		</wsdl:output>
+    	</wsdl:operation>
+    	<wsdl:operation name="eventListParticipation">
+      		<wsdl:input message="tns:eventListParticipationMessageRequest">
+    		</wsdl:input>
+      		<wsdl:output message="tns:eventListParticipationMessageResponse">
+    		</wsdl:output>
+    	</wsdl:operation>
+    	<wsdl:operation name="participationList">
+      		<wsdl:input message="tns:participationListMessageRequest">
+    		</wsdl:input>
+      		<wsdl:output message="tns:participationListMessageResponse">
+    		</wsdl:output>
+    	</wsdl:operation>
+    	<wsdl:operation name="joinEvent">
+      		<wsdl:input message="tns:joinEventMessageRequest">
+    		</wsdl:input>
+      		<wsdl:output message="tns:joinEventMessageResponse">
+    		</wsdl:output>
+    	</wsdl:operation>
+    	<wsdl:operation name="removeEventParticipation">
+      		<wsdl:input message="tns:removeParticipantMessageRequest">
+    		</wsdl:input>
+      		<wsdl:output message="tns:removeParticipantMessageResponse">
+    		</wsdl:output>
+    	</wsdl:operation>
+    	
+    	<wsdl:operation name="updateParticipations">
+      		<wsdl:input message="tns:participationUpdateMessageRequest">
+    		</wsdl:input>
+    	</wsdl:operation>
+	</wsdl:portType>
+  	
+  	<wsdl:binding name="ParticipationServiceBinding" type="tns:ParticipationServicePT">
+    	<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+    	<wsdl:operation name="eventParticipation">
+      		<soap:operation soapAction=""/>
+      		<wsdl:input>
+        		<soap:body use="literal"/>
+      		</wsdl:input>
+      		<wsdl:output>
+        		<soap:body use="literal"/>
+      		</wsdl:output>
+    	</wsdl:operation>
+    	
+    	<wsdl:operation name="eventListParticipation">
+      		<soap:operation soapAction=""/>
+      		<wsdl:input>
+        		<soap:body use="literal"/>
+      		</wsdl:input>
+      		<wsdl:output>
+        		<soap:body use="literal"/>
+      		</wsdl:output>
+    	</wsdl:operation>
+    	
+    	<wsdl:operation name="participationList">
+      		<soap:operation soapAction=""/>
+      		<wsdl:input>
+        		<soap:body use="literal"/>
+      		</wsdl:input>
+      		<wsdl:output>
+        		<soap:body use="literal"/>
+      		</wsdl:output>
+    	</wsdl:operation>
+    	    	
+    	<wsdl:operation name="joinEvent">
+      		<soap:operation soapAction=""/>
+      		<wsdl:input>
+        		<soap:body use="literal"/>
+      		</wsdl:input>
+      		<wsdl:output>
+        		<soap:body use="literal"/>
+      		</wsdl:output>
+    	</wsdl:operation>
+    	
+    	<wsdl:operation name="removeEventParticipation">
+      		<soap:operation soapAction=""/>
+      		<wsdl:input> 
+        		<soap:body use="literal"/>
+      		</wsdl:input>
+      		<wsdl:output>
+        		<soap:body use="literal"/>
+      		</wsdl:output>
+    	</wsdl:operation>
+    	
+    	<wsdl:operation name="updateParticipations">
+      		<soap:operation soapAction=""/>
+      		<wsdl:input> 
+        		<soap:body use="literal"/>
+      		</wsdl:input>
+    	</wsdl:operation> 
+    	
+	</wsdl:binding>
+  	
+  	<wsdl:service name="ParticipationService">
+    	<wsdl:port binding="tns:ParticipationServiceBinding" name="ParticipationServicePort">
+      		<soap:address location="http://localhost:8080/participationService/participationService"/>
+    	</wsdl:port>
+  	</wsdl:service>
+</wsdl:definitions>
