@@ -357,13 +357,11 @@ public class ParticipationDAOImpl implements ParticipationDAO {
 			usernames += "'"+username+"',";
 		}
 		
-		Optional.ofNullable(usernames)
-	      .filter(str -> str.length() != 0)
-	      .map(str -> str.substring(0, str.length() - 1))
-	      .orElse(usernames);
+		usernames = usernames.substring(0, usernames.length()-1);
+		
 		
 		//  Query for participation delete
-		String query = "DELETE FROM "+PARTICIPATIONS+" WHERE "+EVENTID_COLUMN+" ='"+participation.getEventId()+"' AND "+USERNAME_COLUMN+" IN (" +usernames+")" ;	
+		String query = "DELETE FROM "+PARTICIPATIONS+" WHERE "+EVENTID_COLUMN+" ="+participation.getEventId()+" AND "+USERNAME_COLUMN+" IN (" +usernames+")" ;	
 
 		Connection con = null;
 		Statement st = null;

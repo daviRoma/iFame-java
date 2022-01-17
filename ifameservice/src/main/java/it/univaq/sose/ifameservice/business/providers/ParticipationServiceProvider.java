@@ -65,7 +65,6 @@ public class ParticipationServiceProvider {
 		ParticipationListRequest request = new ParticipationListRequest();
 		request.setEventIds(eventIds);
 
-		
 		ParticipationListResponse response = participationServicePT.participationList(request);
 		
 		LOGGER.info("[ParticipationServiceProvider]::[getParticipations]::Returning ParticipationService response");

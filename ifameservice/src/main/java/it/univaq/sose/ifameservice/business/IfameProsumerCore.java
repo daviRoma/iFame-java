@@ -97,7 +97,7 @@ public class IfameProsumerCore {
 
         List<Integer> eventIds = participationServiceProvider.getMyJoinedEventParticipations(username);
         
-		List<Participation> participations = null;
+		List<Participation> participations = new ArrayList<Participation>();
 		
 		if (!eventIds.isEmpty()) {			
 			participations = participationServiceProvider.getParticipations(eventIds);

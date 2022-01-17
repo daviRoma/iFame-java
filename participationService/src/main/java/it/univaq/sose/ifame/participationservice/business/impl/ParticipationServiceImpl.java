@@ -63,11 +63,13 @@ public class ParticipationServiceImpl implements ParticipationService {
 		List<Participation> participations = participationDao.find(request.getEventIds());
 		List<ParticipationDetail> participationsDetail = new ArrayList<ParticipationDetail>();
 		
-		for (Participation pa : participations) {
-			ParticipationDetail paDet = new ParticipationDetail();
-			paDet.setEventId(pa.getEventId());
-			paDet.setParticipants(pa.getParticipationIds());
-			participationsDetail.add(paDet);
+		if (participations != null) {
+			for (Participation pa : participations) {
+				ParticipationDetail paDet = new ParticipationDetail();
+				paDet.setEventId(pa.getEventId());
+				paDet.setParticipants(pa.getParticipationIds());
+				participationsDetail.add(paDet);
+			}
 		}
 		
 		ParticipationListResponse response = new ParticipationListResponse();

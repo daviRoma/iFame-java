@@ -322,13 +322,13 @@ public class AccountDAOImpl implements AccountDAO {
 		//  Query for account update
 		String query = "UPDATE "+ACCOUNTS+" SET ";
 
-		if (account.getFirstname() != null) query += FIRSTNAME_COLUMN + "='"+ account.getFirstname().replace("'", "\\'") + "',";
-		if (account.getLastname() != null) query += LASTNAME_COLUMN + "='"+ account.getLastname().replace("'", "\\'") + "',";
-		if (account.getUsername() != null) query += USERNAME_COLUMN+"='"+ account.getUsername().replace("'", "\\'") + "',";
-		if (account.getEmail() != null) query += EMAIL_COLUMN+"='"+ account.getEmail() +"',";
-		if (account.getPassword() != null) query += PASSWORD_COLUMN+"='"+account.getPassword() +"',";
-		if (account.getPicture() != null) query += PICTURE_COLUMN + "='"+ account.getPicture() + "',";
-		if (account.getPreferences() != null) query += PREFERENCES_COLUMN+"='"+ preferences + "'";
+		if (account.getFirstname() != null) query += FIRSTNAME_COLUMN + "='"+ account.getFirstname().replace("'", "\\'") + "'";
+		if (account.getLastname() != null) query += "," + LASTNAME_COLUMN + "='"+ account.getLastname().replace("'", "\\'") + "'";
+		if (account.getUsername() != null) query += "," + USERNAME_COLUMN+"='"+ account.getUsername().replace("'", "\\'") + "'";
+		if (account.getEmail() != null) query += "," + EMAIL_COLUMN+"='"+ account.getEmail() +"'";
+		if (account.getPassword() != null) query += "," + PASSWORD_COLUMN+"='"+account.getPassword() +"'";
+		if (account.getPicture() != null) query += "," + PICTURE_COLUMN + "='"+ account.getPicture() + "'";
+		if (account.getPreferences() != null) query += "," + PREFERENCES_COLUMN+"='"+ preferences + "'";
 		
 		query += " WHERE "+IDACCOUNT_COLUMN+"="+account.getId();
 		
