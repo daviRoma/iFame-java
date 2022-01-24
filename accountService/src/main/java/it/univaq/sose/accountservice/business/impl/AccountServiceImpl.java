@@ -75,13 +75,13 @@ public class AccountServiceImpl implements AccountService {
 		try {
 			LOGGER.info("[AccountServiceImpl]::[updateAccountAndReferences]::Calling IFame service");
 
-			URL forecastUrl = new URL(IFAMESERVICE_URL + "/participations/update/username/" + account.getUsername() + "/" + acc.getUsername());
+			URL forecastUrl = new URL(IFAMESERVICE_URL + "/participation/update/username/" + account.getUsername() + "/" + acc.getUsername());
 			HttpURLConnection c = (HttpURLConnection) forecastUrl.openConnection();
-			c.setDoOutput(true); // Triggers POST
+			c.setDoOutput(true); // Triggers PUT
 			c.setRequestMethod("PUT");
 			c.setRequestProperty("Content-Type", "application/json");
 			c.setRequestProperty("Accept", "application/json");
-			c.setRequestProperty("Authorization", "Bearer " + header);
+			c.setRequestProperty("Authorization", header);
 			c.setUseCaches(false);
 			c.setAllowUserInteraction(false);
 

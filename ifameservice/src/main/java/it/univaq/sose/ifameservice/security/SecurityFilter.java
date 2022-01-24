@@ -49,7 +49,7 @@ public class SecurityFilter implements ContainerRequestFilter {
 			String token = authorizationHeader.substring(AUTHORIZATION_HEADER_PREFIX.length()).trim();
 			
 			try {
-				
+				LOGGER.info("[Security]::[validateToken]::Token: " + token);
 				// Validate the token
 				Key key = keyGenerator.generateKey();
 				Jwts.parser().setSigningKey(key).parseClaimsJws(token);

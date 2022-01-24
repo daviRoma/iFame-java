@@ -200,7 +200,8 @@ public class EventDAOImpl implements EventDAO {
 		Statement st = null;
 		ResultSet rs = null;
 
-		List<EventDetails> events = null;
+		List<EventDetails> eventList = null;
+		Map<Integer, EventDetails> events = null;
 		
 		Map<Integer,List<FoodCategory>> foodCategoryMap = new HashMap<>();
 		
@@ -213,7 +214,7 @@ public class EventDAOImpl implements EventDAO {
 			if (rs.next()) {
 				LOGGER.info("[EventDAOImpl]::[find]::Read results...");
 				
-				events = new ArrayList<EventDetails>();
+				events = new HashMap<Integer, EventDetails>();
 				
 				// Read again result list 
 				rs.beforeFirst();
@@ -232,6 +233,10 @@ public class EventDAOImpl implements EventDAO {
 				
 				// Populate activity list
 				while (rs.next()) {
+					
+					// if row already present in map
+					if(events.containsKey(rs.getInt(ID_COLUMN))) continue;
+					
 					EventDetails event = new EventDetails();
 
 					event.setId(rs.getInt(ID_COLUMN));
@@ -264,10 +269,17 @@ public class EventDAOImpl implements EventDAO {
 					if (foodCategoryMap.containsKey(rs.getInt(ID_COLUMN))) {
 						event.setFoodCategories(foodCategoryMap.get(rs.getInt(ID_COLUMN)));
 					}
-					events.add(event);
+					
+					events.put(event.getId(), event);
 				}
 				
-
+				if (!events.isEmpty()) {
+					
+					eventList = new ArrayList<EventDetails>();
+					for (Integer key : events.keySet()) {
+						eventList.add(events.get(key));
+					}
+				}
 			}
 		} catch (SQLException se) {
 			LOGGER.error("[EventDAOImpl]::[find]::Error Message: " + se.getMessage());
@@ -303,7 +315,7 @@ public class EventDAOImpl implements EventDAO {
 			}
 		}
 
-		return events;
+		return eventList;
 	}
 	
 	@Override
@@ -328,7 +340,8 @@ public class EventDAOImpl implements EventDAO {
 		Statement st = null;
 		ResultSet rs = null;
 
-		List<EventDetails> events = null;
+		List<EventDetails> eventList = null;
+		Map<Integer, EventDetails> events = null;
 		
 		Map<Integer,List<FoodCategory>> foodCategoryMap = new HashMap<>();
 		
@@ -341,7 +354,7 @@ public class EventDAOImpl implements EventDAO {
 			if (rs.next()) {
 				LOGGER.info("[EventDAOImpl]::[find]::[ids]::Read results...");
 				
-				events = new ArrayList<EventDetails>();
+				events = new HashMap<Integer, EventDetails>();
 				
 				// Read again result list 
 				rs.beforeFirst();
@@ -360,6 +373,10 @@ public class EventDAOImpl implements EventDAO {
 				
 				// Populate activity list
 				while (rs.next()) {
+
+					// if row already present in map
+					if(events.containsKey(rs.getInt(ID_COLUMN))) continue;
+					
 					EventDetails event = new EventDetails();
 
 					event.setId(rs.getInt(ID_COLUMN));
@@ -391,9 +408,17 @@ public class EventDAOImpl implements EventDAO {
 					if (foodCategoryMap.containsKey(rs.getInt(ID_COLUMN))) {
 						event.setFoodCategories(foodCategoryMap.get(rs.getInt(ID_COLUMN)));
 					}
-					events.add(event);
+					
+					events.put(event.getId(), event);
 				}
 				
+				if (!events.isEmpty()) {
+					
+					eventList = new ArrayList<EventDetails>();
+					for (Integer key : events.keySet()) {
+						eventList.add(events.get(key));
+					}
+				}
 
 			}
 		} catch (SQLException | DatatypeConfigurationException e) {
@@ -422,7 +447,7 @@ public class EventDAOImpl implements EventDAO {
 			}
 		}
 
-		return events;
+		return eventList;
 	}
 
 	@Override

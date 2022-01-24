@@ -14,13 +14,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import javax.xml.datatype.DatatypeConfigurationException;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.google.gson.Gson;
 
 import it.univaq.sose.eventservice.FoodCategory;
 import it.univaq.sose.ifameservice.business.IfameProsumerCore;

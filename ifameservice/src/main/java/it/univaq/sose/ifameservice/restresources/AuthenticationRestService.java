@@ -9,7 +9,6 @@ import javax.inject.Inject;
 import javax.resource.spi.SecurityException;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -25,9 +24,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import it.univaq.sose.ifameservice.business.providers.AccountServiceProvider;
+import it.univaq.sose.ifameservice.model.AuthRequest;
 import it.univaq.sose.ifameservice.model.AuthResponse;
 import it.univaq.sose.ifameservice.model.Credentials;
-import it.univaq.sose.ifameservice.security.Secured;
 import it.univaq.sose.ifameservice.utils.KeyGenerator;
 
 @Path("/authentication")
@@ -47,15 +46,24 @@ public class AuthenticationRestService {
 	@Autowired
 	private AccountServiceProvider accountServiceProvider;
 
-	@GET
-	@Secured
+	@POST
 	@Path("/validate/token")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response validateToken() {
+    public AuthResponse validateToken(AuthRequest request) {
 
 		LOGGER.info("[AuthenticationRestService]::[validateToken]");
-		
-		return Response.ok().build();
+
+        try {
+        	Key key = keyGenerator.generateKey();
+        	Jwts.parser().setSigningKey(key).parseClaimsJws(request.getToken());        	
+        	Response.ok().build();
+        } catch (Exception ex) {
+        	LOGGER.info("[AuthenticationRestService]::[validateToken]::Invalid");
+        	Response.status(Response.Status.UNAUTHORIZED).build();
+        	return new AuthResponse(null, "Unauthorized");
+        }
+        
+        return new AuthResponse(issueToken(request.getUsername()), "Refresh");
     }
 	
 	@POST
