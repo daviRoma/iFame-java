@@ -190,7 +190,7 @@ public class IfameProsumerCore {
 	 */
 	public Integer createEvent(Event event) throws DatatypeConfigurationException {
 		LOGGER.info("[IfameProsumerCore]::[createEvent]");
-		
+
 		EventCreationRequest request = new EventCreationRequest();
 		
 		request.setEvent(RestResourceHelper.eventRequestMapping(event));
@@ -199,7 +199,7 @@ public class IfameProsumerCore {
 		Integer eventId = eventServiceProvider.createEvent(request);
 		
 		// Add event creator as participant
-		if (!event.getParticipants().isEmpty()) participationServiceProvider.addParticipation(eventId, event.getParticipants().get(0).getUsername());
+		if (event.getParticipants() != null && !event.getParticipants().isEmpty()) participationServiceProvider.addParticipation(eventId, event.getParticipants().get(0).getUsername());
 		
 		return eventId;
 	}
