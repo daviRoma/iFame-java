@@ -98,13 +98,13 @@ public class IfameProsumerCore {
         List<Integer> eventIds = participationServiceProvider.getMyJoinedEventParticipations(username);
         
 		List<Participation> participations = new ArrayList<Participation>();
+		List<Event> events = new ArrayList<Event>();
 		
 		if (!eventIds.isEmpty()) {			
 			participations = participationServiceProvider.getParticipations(eventIds);
+			events = eventServiceProvider.getMyJoinedEvents(eventIds);
 		}
 		
-        List<Event> events = eventServiceProvider.getMyJoinedEvents(eventIds);
-
         RestResourceHelper.buildEventParticipations(events, participations);
         
         LOGGER.info("[IfameProsumerCore]::[getMyJoinedEvents]::Response {}" + events);
